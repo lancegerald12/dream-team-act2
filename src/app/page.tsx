@@ -20,17 +20,22 @@ async function Images() {
       <div className="p4 flex justify-end">
         <UploadDialog />
       </div>
-      <div className="flex flex-wrap justify-center gap-6 p-4">
+      <div className="flex min-h-screen flex-wrap justify-center gap-8 bg-zinc-100 p-6">
         {images.map((image) => (
-          <div key={image.id} className="flex w-64 flex-col">
-            <div className="relative aspect-video bg-zinc-900">
+          <div
+            key={image.id}
+            className="w-64 overflow-hidden rounded-2xl bg-white shadow-lg transition-transform hover:scale-105"
+          >
+            <div className="relative aspect-video bg-zinc-200">
               <img
                 src={image.url}
                 alt={`Image ${image.id}`}
-                className="h-full w-full object-contain object-top"
+                className="h-full w-full object-cover"
               />
             </div>
-            <div className="text-center">{image.id}</div>
+            <div className="p-4 text-center text-sm font-medium text-zinc-700">
+              Image #{image.id}
+            </div>
           </div>
         ))}
       </div>
