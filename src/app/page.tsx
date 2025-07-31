@@ -2,18 +2,12 @@ import { SignedIn, SignedOut, SignIn } from "@clerk/nextjs";
 import Link from "next/link";
 import { UploadButton } from "~/utils/uploadthing";
 import { UploadDialog } from "./_components/upload-dialog";
+const { getMyImages } = await import("~/server/queries");
+
+export const dynamic = "force-dynamic";
 
 async function Images() {
-  const mockUrL = [
-    "https://static.wikia.nocookie.net/jujutsu-kaisen/images/5/5a/Satoru_Gojo_arrives_on_the_battlefield_%28Anime%29.png",
-    "https://butwhytho.net/wp-content/uploads/2023/09/Gojo-Jujutsu-Kaisen-But-Why-Tho-2.jpg",
-    "https://4149anuphj.ufs.sh/f/W02RH3vp9oqyIlO1VbSbTfvP0iDMHp7ByF1lNdmqa49hUrLW",
-    "https://4149anuphj.ufs.sh/f/W02RH3vp9oqyQQfx9ZhQofydjSOcAtM83wuP4I5aT1znRebs",
-  ];
-  const images = mockUrL.map((url, index) => ({
-    id: index + 1,
-    url,
-  }));
+  const images = await getMyImages();
 
   return (
     <div>
@@ -28,13 +22,13 @@ async function Images() {
           >
             <div className="relative aspect-video bg-white">
               <img
-                src={image.url}
+                src={image.imageUrl}
                 alt={`Image ${image.id}`}
                 className="h-full w-full object-cover"
               />
             </div>
-            <div className="p-3 text-center">
-              <p className="text-sm font-medium">{image.id}</p>
+            <div className="bg-black p-3 text-center">
+              <p className="text-sm font-medium text-white">{image.id}</p>
             </div>
           </div>
         ))}
@@ -43,7 +37,7 @@ async function Images() {
   );
 }
 
-export default function HomePage() {
+export default async function HomePage() {
   return (
     <main className="">
       <SignedOut>
