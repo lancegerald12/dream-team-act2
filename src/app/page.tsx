@@ -2,6 +2,7 @@ import { SignedIn, SignedOut, SignIn } from "@clerk/nextjs";
 import Link from "next/link";
 import { UploadButton } from "~/utils/uploadthing";
 import { UploadDialog } from "./_components/upload-dialog";
+import { ImageModal } from "./_components/image-modal";
 const { getMyImages } = await import("~/server/queries");
 
 export const dynamic = "force-dynamic";
@@ -20,15 +21,19 @@ async function Images() {
             key={image.id}
             className="w-64 overflow-hidden rounded-2xl shadow-md transition-transform duration-300 hover:scale-105"
           >
-            <div className="relative aspect-video bg-white">
-              <img
-                src={image.imageUrl}
-                alt={`Image ${image.id}`}
-                className="h-full w-full object-cover"
-              />
-            </div>
+            <ImageModal image={image}>
+              <div className="relative aspect-video bg-white">
+                <img
+                  src={image.imageUrl}
+                  alt={`Image ${image.id}`}
+                  className="h-full w-full object-cover"
+                />
+              </div>
+            </ImageModal>
             <div className="bg-black p-3 text-center">
-              <p className="text-sm font-medium text-white">{image.id}</p>
+              <p className="text-sm font-medium text-white">
+                {image.imageName || image.fileName}
+              </p>
             </div>
           </div>
         ))}
